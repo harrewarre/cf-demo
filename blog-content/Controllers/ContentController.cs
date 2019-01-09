@@ -25,7 +25,21 @@ namespace blog_content.Controllers
         {
             var content = await _storageService.GetBlogMarkdown(slug);
 
-            if(content == null)
+            if (content == null)
+            {
+                return NotFound();
+            }
+
+            return content;
+        }
+
+        [HttpGet]
+        [Route("index")]
+        public async Task<ActionResult<string>> GetIndex()
+        {
+            var content = await _storageService.GetBlogContentIndex();
+
+            if (content == null)
             {
                 return NotFound();
             }
