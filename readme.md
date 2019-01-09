@@ -25,6 +25,10 @@ To run on Cloud Foundry: Create a user provided service called `content-storage`
 
     cf cups -p content-storage '{ "connectionString": "((your storage connectionstring here))" }'
 
+Then push the `blog-content` source to Cloud Foundry using the provided manifest.
+
+    cf push
+
 ### blog-ui
 
 (TBD)
