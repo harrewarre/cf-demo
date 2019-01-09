@@ -10,7 +10,7 @@ To be done:
 
 This thing pretends to be a blog. It loads markdown files from an Azure storage instance. One of the requirements is a connectionstring to an Azure blob storage.
 
-The blob storage service needs a container called `Posts` where the markdown is stored. Add new stuff in `index.json` in the `Content` container. Make sure the slug matches a markdown file name.
+The blob storage service needs a container called `Posts` where the markdown is stored and a container name `Content` where an index is stored for all posts. New stuff is added in `index.json` in the `Content` container. Make sure the slug matches a markdown file name.
 
 ### blog-content
 
