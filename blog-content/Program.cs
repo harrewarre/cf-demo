@@ -21,7 +21,13 @@ namespace blog_content
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((hostingContext, config) => {
+                    config.AddEnvironmentVariables();
                     config.AddCloudFoundry();
+                })
+                .ConfigureLogging((logging) => {
+                    logging.ClearProviders();
+                    logging.AddConsole();
+                    logging.AddDebug();
                 })
                 .UseStartup<Startup>();
     }

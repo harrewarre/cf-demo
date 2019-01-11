@@ -2,11 +2,13 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using blog_content.Config;
 using Microsoft.Extensions.Options;
 using Microsoft.WindowsAzure.Storage;
 using Microsoft.WindowsAzure.Storage.Auth;
 using Microsoft.WindowsAzure.Storage.Blob;
 using Steeltoe.Extensions.Configuration.CloudFoundry;
+using Microsoft.Extensions.Logging;
 
 namespace blog_content.Services 
 {
@@ -18,13 +20,16 @@ namespace blog_content.Services
 
     public class StorageService : IStorageService
     {
+        private readonly ILogger<StorageService> _logger;
         private readonly string _connectionString;
-
         private readonly CloudBlobClient _client;
 
-        public StorageService(IOptions<CloudFoundryServicesOptions> serviceOptions)
+        public StorageService(IOptions<StorageConfig> storageConfig, ILogger<StorageService> logger)
         {   
-            _connectionString = serviceOptions.Value.Services["user-provided"].First(s => s.Name == "content-storage").Credentials["connectionString"].Value;
+            _logger = logger;
+            _connectionString = storageConfig.Value.ConnectionString;
+
+            _logger.LogInformation(storageConfig.Value.ConnectionString);
 
             var account = CloudStorageAccount.Parse(_connectionString);
             _client = account.CreateCloudBlobClient();
@@ -39,9 +44,11 @@ namespace blog_content.Services
 
             if (!blob.Exists())
             {
+                _logger.LogWarning("Tried to load index.json but found nothing!");
                 return null;
             }
 
+            _logger.LogInformation("Loaded index.json!");
             return await GetBlobContentString(blob);
         }
 
@@ -54,9 +61,11 @@ namespace blog_content.Services
 
             if (!blob.Exists())
             {
+                _logger.LogWarning($"Tried to load post with slug {slug} but found nothing!");
                 return null;
             }
 
+            _logger.LogInformation($"Loaded post with slug {slug}");
             return await GetBlobContentString(blob);
         }
 
