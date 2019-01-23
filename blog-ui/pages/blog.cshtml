@@ -1,0 +1,45 @@
+@page "{slug?}"
+@using netcore_blog.Code
+@using netcore_blog.Code.Model
+@using Markdig
+
+@inject IBlog _blog
+
+@{
+    Layout = "_layout.cshtml";
+    var slug = RouteData.Values["slug"] as string;
+}
+
+@if(!string.IsNullOrEmpty(slug)) {
+    var post = await _blog.GetPost(slug);
+    var mdPipe = new MarkdownPipelineBuilder()
+        .UseAdvancedExtensions()
+        .Build();
+
+    <div class="post-meta">
+        Title: @post.Title<br />
+        Created: @post.Created.ToShortDateString()<br />
+        Tags: @string.Join(", ", post.Tags)
+    </div>
+
+    <article>
+        @Html.Raw(Markdown.ToHtml(post.MarkdownContent, mdPipe))
+    </article>
+}
+else
+{
+    var allPosts = await _blog.GetLastestPosts(1000);
+
+    @foreach(var p in allPosts)
+    {
+        <article>
+            <h1><a href="/blog/@p.Slug">@p.Title</a></h1>
+            <p>@p.Summary</p>
+            <small>
+                Created on @p.Created.ToShortDateString()<br> Tagged @string.Join(", ", p.Tags)
+            </small>
+        </article>
+    }
+}
+
+<a href="/">Home</a>

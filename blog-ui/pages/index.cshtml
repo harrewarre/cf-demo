@@ -1,0 +1,24 @@
+@page
+@using netcore_blog.Code
+@using netcore_blog.Code.Model
+
+@inject IBlog _blog
+
+@{
+    Layout = "_layout.cshtml";
+
+    var index = await _blog.GetLastestPosts(5);
+}
+
+<h2>Home</h2>
+
+@foreach(var p in index)
+{
+    <article class="post-meta">
+        <h1><a href="/blog/@p.Slug">@p.Title</a></h1>
+        <p>@p.Summary</p>
+        <small>
+            Created on @p.Created.ToShortDateString()<br> Tagged @string.Join(", ", p.Tags)
+        </small>
+    </article>
+}

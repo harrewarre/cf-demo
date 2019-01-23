@@ -3,10 +3,11 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
-    <RootNamespace>blog_ui</RootNamespace>
+    <RootNamespace>netcore_blog</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Markdig" Version="0.15.7" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
   </ItemGroup>

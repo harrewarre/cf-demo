@@ -1,0 +1,21 @@
+---
+applications:
+- name: blog-content
+  buildpacks:
+   - dotnet_core_buildpack
+  memory: 64M
+  disk_quota: 200M
+  env:
+    ASPNETCORE_ENVIRONMENT: development
+  services:
+    - content-storage
+- name: blog-ui
+  buildpacks:
+   - dotnet_core_buildpack
+  memory: 64M
+  disk_quota: 200M
+  env:
+    ASPNETCORE_ENVIRONMENT: development
+- services:
+  name: registry
+  

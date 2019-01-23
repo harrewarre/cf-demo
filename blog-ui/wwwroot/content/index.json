@@ -1,0 +1,23 @@
+[
+    {
+        "title": "Test post 3",
+        "summary": "This is a small test post.",
+        "created": "2019-01-23",
+        "tags": ["test post", "test", "post"],
+        "slug": "test-post3"
+    },
+    {
+        "title": "Test post 2",
+        "summary": "This is a small test post.",
+        "created": "2019-01-22",
+        "tags": ["test post", "test", "post"],
+        "slug": "test-post2"
+    },
+    {
+        "title": "Test post 1",
+        "summary": "This is a small test post.",
+        "created": "2019-01-21",
+        "tags": ["test post", "test", "post"],
+        "slug": "test-post1"
+    }
+]
